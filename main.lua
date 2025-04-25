@@ -3,7 +3,7 @@
 --- MOD_ID: balaknights
 --- MOD_AUTHOR: [ShiinaKochiya]
 --- MOD_DESCRIPTION: Balatro but Arknights
---- PREFIX: AGL2
+--- PREFIX: blk
 ----------------------------------------------
 ------------MOD CODE -------------------------
 SMODS.Atlas{
@@ -46,7 +46,39 @@ SMODS.Joker{
 }
 
 SMODS.Joker{
-    key = 'PRTS',
+    key = 'theresa',
+    loc_txt = {
+        name = 'Theresa',
+        text = {
+            '+30 Mults, for each Queens destroyed,',
+            "-1.5 Mult"
+        }
+    },
+    atlas = 'Jokers',
+    pos = { x=2, y=0 },
+    config = {
+        extra = {
+            Xmult = 30
+        }
+    },
+    loc_vars = function(self,info_queue,center)
+        return {vars = {center.ability.extra.Xmult}}
+    end,
+
+    calculate = function(self,card,context)
+        if context.joker_main then
+        return{
+            card = card,
+            Xmult_mod = card.ability.extra.Xmult,
+            message = 'X' .. card.ability.extra.Xmult,
+            colour = G.C.MULT,
+        }
+        end
+    end
+}
+
+SMODS.Joker{
+    key = 'prts',
     loc_txt = {
         name = 'PRTS',
         text = {
@@ -113,35 +145,45 @@ SMODS.Back {
     loc_txt = {
         name = 'Rhodes Island',
         text = {
-            "Start with 3 extra Queens",
+            "Start with triple {C:attention}Face{}",
+            "{C:attention}cards{} in your hand",
+            "along with an",
+            "{C:legendary}Eternal{} {C:dark_edition}Negative{} PRTS Joker"
         }
     },
 	pos = { x = 3, y = 0},
-	apply = function(self)
+    apply = function(self)
         G.E_MANAGER:add_event(Event({
             func = function()
-                for _, card in ipairs(G.playing_cards) do
-                    assert(SMODS.change_base(card, nil, self.config.only_one_rank))
+            	local newcards = {}
+                for i = 1, #G.playing_cards do
+      				local card = G.playing_cards[i]
+                    if card:get_id() == 12 or card:get_id() == 13 or card:get_id() == 11 then
+                        local _card = copy_card(card, nil, nil, G.playing_card)
+                        _card:add_to_deck()
+                        G.deck.config.card_limit = G.deck.config.card_limit + 1
+                        table.insert(G.playing_cards, _card)
+                        table.insert(G.playing_cards, _card)
+                        G.deck:emplace(_card)
+                    end
                 end
+                
+                local card = SMODS.create_card({
+                    set = 'Joker',
+                    area = G.jokers,
+                    key = 'j_blk_prts',
+                    stickers = { 'eternal' },
+                })
+                card:set_edition({negative = true}, true)
+                card:add_to_deck()
+                G.jokers:emplace(card)
+
                 return true
             end
         }))
-    end,
-    calculate = function(self, card, context)
-    	
-    	if context.final_scoring_step then
-    		hand_chips = hand_chips*6
-    		mult = math.max(1, mult - (mult % 6))
-    		return{
-    			chips = 0,
-    			mult = 0,
-    			message = "Sixed!"
-    		}
-    	end
-
     end
-
 }
+
 
 function values(t)
     local i = 0
