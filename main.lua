@@ -6,6 +6,9 @@
 --- PREFIX: blk
 ----------------------------------------------
 ------------MOD CODE -------------------------
+
+
+-- Sprites
 SMODS.Atlas{
     key = 'Jokers',
     path = 'Joker.png',
@@ -13,6 +16,8 @@ SMODS.Atlas{
     py = 95 
 }
 
+--[[
+-- Joker: Amiya
 SMODS.Joker{
     key = 'amiyi',
     loc_txt = {
@@ -45,38 +50,53 @@ SMODS.Joker{
     end
 }
 
+
+-- Joker: Theresa/Queen of Babel
+
 SMODS.Joker{
     key = 'theresa',
     loc_txt = {
-        name = 'Theresa',
+        name = 'Queen of Babel',
         text = {
-            '+30 Mults, for each Queens destroyed,',
-            "-1.5 Mult"
+            '{C:mult}+#1#{} Mult, each Queen held in',
+            "hand gave extra {C:mult}+#2#{} Mult permanently"
         }
     },
     atlas = 'Jokers',
     pos = { x=2, y=0 },
     config = {
         extra = {
-            Xmult = 30
+            mult = 10,
+            qmult = 2
         }
     },
     loc_vars = function(self,info_queue,center)
-        return {vars = {center.ability.extra.Xmult}}
+        return {vars = {center.ability.extra.mult, center.ability.extra.qmult}}
     end,
 
-    calculate = function(self,card,context)
-        if context.joker_main then
+    calculate = function(self,card,context) 
+    if context.before and context.cardarea == G.play then
+            if context.other_card:get_id() == 12 then
+            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.qmult
+            return {
+                message = "Served"
+            }
+        end
+    end
+
+    if context.joker_main then
         return{
             card = card,
-            Xmult_mod = card.ability.extra.Xmult,
-            message = 'X' .. card.ability.extra.Xmult,
+            mult_mod = card.ability.extra.mult,
+            message = '+' .. card.ability.extra.mult,
             colour = G.C.MULT,
         }
         end
     end
 }
+--]]
 
+-- Joker: PRTS
 SMODS.Joker{
     key = 'prts',
     loc_txt = {
