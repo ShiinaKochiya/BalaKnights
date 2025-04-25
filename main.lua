@@ -105,6 +105,44 @@ SMODS.Joker{
         end
 }
 
+SMODS.Back {
+	key = "oops",
+	
+	config = {only_one_rank = '6', ante_scaling = 1.6},
+	atlas = "Jokers",
+    loc_txt = {
+        name = 'Rhodes Island',
+        text = {
+            "Start with 3 extra Queens",
+        }
+    },
+	pos = { x = 3, y = 0},
+	apply = function(self)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                for _, card in ipairs(G.playing_cards) do
+                    assert(SMODS.change_base(card, nil, self.config.only_one_rank))
+                end
+                return true
+            end
+        }))
+    end,
+    calculate = function(self, card, context)
+    	
+    	if context.final_scoring_step then
+    		hand_chips = hand_chips*6
+    		mult = math.max(1, mult - (mult % 6))
+    		return{
+    			chips = 0,
+    			mult = 0,
+    			message = "Sixed!"
+    		}
+    	end
+
+    end
+
+}
+
 function values(t)
     local i = 0
     return function() i = i + 1; return t[i] end
