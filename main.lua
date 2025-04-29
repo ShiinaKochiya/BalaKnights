@@ -16,7 +16,6 @@ SMODS.Atlas{
     py = 95 
 }
 
---[[
 -- Joker: Amiya
 SMODS.Joker{
     key = 'amiyi',
@@ -59,42 +58,52 @@ SMODS.Joker{
         name = 'Queen of Babel',
         text = {
             '{C:mult}+#1#{} Mult, each Queen held in',
-            "hand gave extra {C:mult}+#2#{} Mult permanently"
+            "hand gave extra {C:mult}+#2#{} Mult",
+            "permanently. If held in hand is",
+            "{C:attention}Queen{} of {C:mult}Hearts{}, double Mult instead",
+            "{C:inactive, C:grey}(Currently {C:mult}+#3#{C:inactive} Mult)"
         }
     },
     atlas = 'Jokers',
     pos = { x=2, y=0 },
     config = {
         extra = {
-            mult = 10,
-            qmult = 2
+            mult = 4,
+            amult = 2,
+            tmult = 4
         }
     },
     loc_vars = function(self,info_queue,center)
-        return {vars = {center.ability.extra.mult, center.ability.extra.qmult}}
+        return {vars = {center.ability.extra.mult, center.ability.extra.amult, center.ability.extra.tmult}}
     end,
 
     calculate = function(self,card,context) 
-    if context.before and context.cardarea == G.play then
-            if context.other_card:get_id() == 12 then
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.qmult
-            return {
-                message = "Served"
-            }
+    if context.individual and context.cardarea == G.hand then
+             if context.other_card:get_id() == 12 then
+                if context.other_card:is_suit("Hearts") then
+                    card.ability.extra.tmult = card.ability.extra.tmult * 2
+                    return {
+                        message = "Live"
+                   }
+                else
+                    card.ability.extra.tmult = card.ability.extra.tmult + card.ability.extra.amult
+                    return {
+                         message = "Served"
+                    }
+            end
         end
     end
 
     if context.joker_main then
         return{
             card = card,
-            mult_mod = card.ability.extra.mult,
-            message = '+' .. card.ability.extra.mult,
+            mult_mod = card.ability.extra.tmult,
+            message = '+' .. card.ability.extra.tmult,
             colour = G.C.MULT,
         }
         end
     end
 }
---]]
 
 -- Joker: PRTS
 SMODS.Joker{
@@ -158,8 +167,7 @@ SMODS.Joker{
 }
 
 SMODS.Back {
-	key = "oops",
-	
+	key = "rhodes",
 	config = {only_one_rank = '6', ante_scaling = 1.6},
 	atlas = "Jokers",
     loc_txt = {
