@@ -50,17 +50,17 @@ SMODS.Joker{
 }
 
 
--- Joker: Theresa/Queen of Babel
+-- Joker: Theresa/King of Sarkaz
 
 SMODS.Joker{
     key = 'theresa',
     loc_txt = {
-        name = 'Queen of Babel',
+        name = 'King of Sarkaz',
         text = {
             '{C:mult}+#1#{} Mult, each Queen held in',
-            "hand gave extra {C:mult}+#2#{} Mult",
-            "permanently. If held in hand is",
-            "{C:attention}Queen{} of {C:mult}Hearts{}, double Mult instead",
+            "hand give {C:mult}+#2#{} Mult.",
+            "If the card is {C:attention}Queen{} of {C:mult}Hearts{},",
+            "double current Mult amount instead",
             "{C:inactive, C:grey}(Currently {C:mult}+#3#{C:inactive} Mult)"
         }
     },
@@ -179,6 +179,7 @@ SMODS.Back {
             "{C:legendary}Eternal{} {C:dark_edition}Negative{} PRTS Joker"
         }
     },
+    loc_args = {localize{type = 'name_text', key = 'v_magic_trick', set = 'Voucher'}, localize{type = 'name_text', key = 'v_illusion', set = 'Voucher'}},
 	pos = { x = 3, y = 0},
     apply = function(self)
         G.E_MANAGER:add_event(Event({
@@ -205,7 +206,6 @@ SMODS.Back {
                 card:set_edition({negative = true}, true)
                 card:add_to_deck()
                 G.jokers:emplace(card)
-
                 return true
             end
         }))
