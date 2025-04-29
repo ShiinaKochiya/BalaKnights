@@ -58,7 +58,9 @@ SMODS.Joker{
         name = 'Queen of Babel',
         text = {
             '{C:mult}+#1#{} Mult, each Queen held in',
-            "hand gave extra {C:mult}+#2#{} Mult permanently"
+            "hand gave extra {C:mult}+#2#{} Mult",
+            "permanently. If held in hand is",
+            "Queen of {C:mult}Hearts{}, double Mult instead"
         }
     },
     atlas = 'Jokers',
@@ -77,10 +79,17 @@ SMODS.Joker{
     if context.before then
         for i = 1, #G.hand.cards do
              if G.hand.cards[i]:get_id() == 12 then
-                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.qmult
-                return {
-                    message = "Served"
-                }
+                --[[if G.hand.cards[i]:is_suit("Hearts") then
+                    card.ability.extra.mult = card.ability.extra.mult * 2
+                    return {
+                        message = "Live"
+                   }
+                else--]]
+                    card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.qmult
+                    return {
+                         message = "Served"
+                    }
+                --end
             end
         end
     end
