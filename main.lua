@@ -16,7 +16,6 @@ SMODS.Atlas{
     py = 95 
 }
 
---[[
 -- Joker: Amiya
 SMODS.Joker{
     key = 'amiyi',
@@ -66,7 +65,7 @@ SMODS.Joker{
     pos = { x=2, y=0 },
     config = {
         extra = {
-            mult = 10,
+            mult = 4,
             qmult = 2
         }
     },
@@ -75,12 +74,14 @@ SMODS.Joker{
     end,
 
     calculate = function(self,card,context) 
-    if context.before and context.cardarea == G.play then
-            if context.other_card:get_id() == 12 then
-            card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.qmult
-            return {
-                message = "Served"
-            }
+    if context.before then
+        for i = 1, #G.hand.cards do
+             if G.hand.cards[i]:get_id() == 12 then
+                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.qmult
+                return {
+                    message = "Served"
+                }
+            end
         end
     end
 
@@ -94,7 +95,6 @@ SMODS.Joker{
         end
     end
 }
---]]
 
 -- Joker: PRTS
 SMODS.Joker{
