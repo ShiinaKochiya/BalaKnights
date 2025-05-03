@@ -58,9 +58,9 @@ SMODS.Joker{
         name = 'King of Sarkaz',
         text = {
             '{C:mult}+#1#{} Mult, each Queen held in',
-            "hand give {C:mult}+#2#{} Mult.",
+            "hand give {C:mult}+#2#{} Mult permanently.",
             "If the card is {C:attention}Queen{} of {C:mult}Hearts{},",
-            "double current Mult amount instead",
+            "double the current Mult amount instead",
             "{C:inactive, C:grey}(Currently {C:mult}+#3#{C:inactive} Mult)"
         }
     },
