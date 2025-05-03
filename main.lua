@@ -78,7 +78,7 @@ SMODS.Joker{
     end,
 
     calculate = function(self,card,context) 
-    if context.individual and context.cardarea == G.hand then
+    if context.individual and context.cardarea == G.hand and not context.end_of_round then
              if context.other_card:get_id() == 12 then
                 if context.other_card:is_suit("Hearts") then
                     card.ability.extra.tmult = card.ability.extra.tmult * 2
