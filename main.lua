@@ -22,28 +22,36 @@ SMODS.Joker{
     loc_txt = {
         name = 'Amiya',
         text = {
-            'This Donke gives {X:mult,C:white}X#1#{} Mult.',
-            "I'm learning how to make mods bruh"
+            '{C:chips}+60{} Chips. This Donke gain',
+            '{C:chips}+20{} Chips per Kings discarded.',
+            "If the first discarded hand",
+            'only contains Kings of [suit],',
+            "add a permanent copy of that",
+            "card and draw into hand",
+            "{C:inactive, C:grey}(Currently {C:chips}+#1#{C:inactive} Chips)"
         }
     },
     atlas = 'Jokers',
     pos = { x=0, y=0 },
     config = {
         extra = {
-            Xmult = 30
+            chips = 60,
+            achip = 20,
         }
     },
     loc_vars = function(self,info_queue,center)
-        return {vars = {center.ability.extra.Xmult}}
+        return {vars = {
+            center.ability.extra.chips,
+            center.ability.extra.achips
+        }}
     end,
 
     calculate = function(self,card,context)
         if context.joker_main then
         return{
             card = card,
-            Xmult_mod = card.ability.extra.Xmult,
-            message = 'X' .. card.ability.extra.Xmult,
-            colour = G.C.MULT,
+            chips = card.ability.extra.chips,
+            colour = G.C.CHIPS
         }
         end
     end
