@@ -211,7 +211,6 @@ SMODS.Joker{
 
 SMODS.Back {
 	key = "rhodes",
-	config = {only_one_rank = '6', ante_scaling = 1.6},
 	atlas = "Jokers",
     loc_txt = {
         name = 'Rhodes Island',
