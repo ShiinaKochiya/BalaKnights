@@ -5,7 +5,7 @@ When the Docter went all in Jesselton
 A simple Balatro mod, adding a few Jokers and Deck based on Arknights characters. Rational your cards, it ends sooner than you think
 
 ## Requirements:
-- [Steamodded](https://github.com/Steamodded/smods) (ofcourse every Balatro need Steamodded)
+- [Steamodded](https://github.com/Steamodded/smods) (of course every Balatro mod need Steamodded)
 
 ## What this mod added:
 - 3 Jokers:
