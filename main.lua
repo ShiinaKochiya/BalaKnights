@@ -154,7 +154,7 @@ SMODS.Joker{
     loc_txt = {
         name = 'PRTS',
         text = {
-            'When a King or Queen get scored',
+            'When a {C:attention}King{} or {C:attention}Queen{} get scored',
             "immediately destroy that card and",
             "this Joker gain {X:mult,C:white}X#1#{} Mult",
             "{C:inactive, C:grey}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
