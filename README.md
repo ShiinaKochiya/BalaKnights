@@ -1,6 +1,6 @@
 # BalaKnights
 
-When the Docter went all in Jesselton
+When the Doctor went all in Jesselton
 
 A simple Balatro mod, adding a few Jokers and Deck based on Arknights characters. Plan how to play your cards wisely, it ends sooner than you think
 
