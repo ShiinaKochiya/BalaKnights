@@ -262,7 +262,8 @@ SMODS.Back {
     loc_txt = {
         name = 'Debug Deck',
         text = {
-            "Same as RI Deck but also add Theresa and Amiya"
+            "Same as RI Deck but",
+            "also add Theresa and Amiya"
         }
     },
     loc_args = {
