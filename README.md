@@ -11,7 +11,7 @@ A simple Balatro mod, adding a few Jokers and Deck based on Arknights characters
 - 3 Jokers:
   + Queen of Babel: Gain permanent flat amount of Mults per Queen in hand
   + PRTS: Gain permanent xMult per Kings and Queens played and scored, after which destroy the cards
-  + Amiya: Still in development. For now it give x30 Mult with no condition
+  + Amiya: Give flat amount of Chips, gain extra Chips per discarded Kings. If the first discarded hand only contain a single King, create a copy of that card and draw to hand
 - 1 Deck:
   + Rhodes Island deck: Starts with triple the amount of face cards, with an Eternal Negative PRTS Joker
 
