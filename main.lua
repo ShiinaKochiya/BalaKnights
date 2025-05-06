@@ -227,6 +227,7 @@ SMODS.Back {
         G.E_MANAGER:add_event(Event({
             func = function()
             	local newcards = {}
+                --Triples face cards
                 for i = 1, #G.playing_cards do
       				local card = G.playing_cards[i]
                     if card:get_id() == 12 or card:get_id() == 13 or card:get_id() == 11 then
@@ -239,6 +240,7 @@ SMODS.Back {
                     end
                 end
                 
+                --PRTS created
                 local card = SMODS.create_card({
                     set = 'Joker',
                     area = G.jokers,
@@ -265,7 +267,7 @@ SMODS.Back {
     },
     loc_args = {localize{type = 'name_text', key = 'v_magic_trick', set = 'Voucher'}, localize{type = 'name_text', key = 'v_illusion', set = 'Voucher'}},
 	pos = { x = 3, y = 0},
-    apply = function(self)
+    apply = function(self, back)
         G.E_MANAGER:add_event(Event({
             func = function()
             	local newcards = {}
@@ -310,7 +312,13 @@ SMODS.Back {
                 })
                 card:add_to_deck()
                 G.jokers:emplace(card)
-
+                
+                for k, v in pairs(self.effect.config.vouchers) do
+                    G.GAME.used_vouchers[v ] = true
+                    G.GAME.starting_voucher_count = (G.GAME.starting_voucher_count or 0) + 1
+                    Card.apply_to_run(nil, G.P_CENTERS[v])
+                end
+                
                 return true
             end
         }))
