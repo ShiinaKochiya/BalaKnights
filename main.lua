@@ -79,7 +79,7 @@ SMODS.Joker{
                 }
 
             end
-            print(context.other_card)
+            --print(context.other_card)
         end
 
         if context.joker_main then
@@ -227,6 +227,7 @@ SMODS.Back {
         G.E_MANAGER:add_event(Event({
             func = function()
             	local newcards = {}
+                --Triples face cards
                 for i = 1, #G.playing_cards do
       				local card = G.playing_cards[i]
                     if card:get_id() == 12 or card:get_id() == 13 or card:get_id() == 11 then
@@ -239,6 +240,7 @@ SMODS.Back {
                     end
                 end
                 
+                --PRTS created
                 local card = SMODS.create_card({
                     set = 'Joker',
                     area = G.jokers,
@@ -263,12 +265,16 @@ SMODS.Back {
             "Same as RI Deck but also add Theresa and Amiya"
         }
     },
-    loc_args = {localize{type = 'name_text', key = 'v_magic_trick', set = 'Voucher'}, localize{type = 'name_text', key = 'v_illusion', set = 'Voucher'}},
+    loc_args = {
+        localize{type = 'name_text', key = 'v_magic_trick', set = 'Voucher'}, 
+        localize{type = 'name_text', key = 'v_illusion', set = 'Voucher'}
+    },
 	pos = { x = 3, y = 0},
-    apply = function(self)
+    apply = function(self, back)
         G.E_MANAGER:add_event(Event({
             func = function()
             	local newcards = {}
+                --Tripples the face cards
                 for i = 1, #G.playing_cards do
       				local card = G.playing_cards[i]
                     if card:get_id() == 12 or card:get_id() == 13 or card:get_id() == 11 then
@@ -281,6 +287,7 @@ SMODS.Back {
                     end
                 end
                 
+                --PRTS created
                 local card = SMODS.create_card({
                     set = 'Joker',
                     area = G.jokers,
@@ -291,6 +298,7 @@ SMODS.Back {
                 card:add_to_deck()
                 G.jokers:emplace(card)
 
+                --Amiya created
                 local card = SMODS.create_card({
                     set = 'Joker',
                     area = G.jokers,
@@ -299,6 +307,7 @@ SMODS.Back {
                 card:add_to_deck()
                 G.jokers:emplace(card)
 
+                --Theresa created
                 local card = SMODS.create_card({
                     set = 'Joker',
                     area = G.jokers,
@@ -306,6 +315,16 @@ SMODS.Back {
                 })
                 card:add_to_deck()
                 G.jokers:emplace(card)
+                
+                --[[for k, v in pairs(back.effect.config.vouchers) do
+                    G.GAME.used_vouchers[v ] = true
+                    G.GAME.starting_voucher_count = (G.GAME.starting_voucher_count or 0) + 1
+                    Card.apply_to_run(nil, G.P_CENTERS[v])
+                end
+                
+                Commenting this until I found a way to add vouchers
+                --]]
+                
                 return true
             end
         }))
