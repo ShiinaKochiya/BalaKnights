@@ -103,16 +103,18 @@ SMODS.Joker{
             '{C:mult}+#1#{} Mult, each Queen held in',
             "hand give {C:mult}+#2#{} Mult permanently.",
             "If the card is {C:attention}Queen{} of {C:mult}Hearts{},",
-            "double the current Mult amount instead",
+            "multiply the Mult amount by x1.5 instead",
             "{C:inactive, C:grey}(Currently {C:mult}+#3#{C:inactive} Mult)"
         }
     },
+    rarity = 3,
     atlas = 'Jokers',
     pos = { x=2, y=0 },
+    cost = 8,
     config = {
         extra = {
             mult = 4,
-            amult = 2,
+            amult = 4,
             tmult = 4
         }
     },
@@ -124,7 +126,7 @@ SMODS.Joker{
     if context.individual and context.cardarea == G.hand and not context.end_of_round then
              if context.other_card:get_id() == 12 then
                 if context.other_card:is_suit("Hearts") then
-                    card.ability.extra.tmult = card.ability.extra.tmult * 2
+                    card.ability.extra.tmult = card.ability.extra.tmult * 1.5
                     return {
                         message = "Live"
                    }
