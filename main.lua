@@ -217,20 +217,21 @@ SMODS.Joker{
     loc_txt = {
         name = 'Terra Investment Masterclass',
         text = {
-            'Testing',
+            'Test Joker',
+            '1 in #1# chance to',
+            'say "Test"'
         }
     },
     atlas = 'Jokers',
     pos = { x=4, y=0 },
     config = {
         extra = {
-            chips = 60,
-            achip = 20,
-            odds = 2,
+            odds = 2
         }
     },
     loc_vars = function(self,info_queue,center)
         return {vars = {
+            center.ability.extra.odds,
         }}
     end,
 
@@ -243,7 +244,43 @@ SMODS.Joker{
     --end of calc funct
     end
 }
+--Joker: Mudrock
+SMODS.Joker{
+    key = 'Mudrock',
+    loc_txt = {
+        name = 'Mudrock',
+        text = {
+            '{C:green}#1# in #2#{} chance for',
+            'Stone cards to give',
+            'extra +50 chips'
+        }
+    },
+    atlas = 'Jokers',
+    pos = { x=5, y=0 },
+    config = {
+        extra = {
+            odds = 2,
+            achip = 50
+        }
+    },
+    loc_vars = function(self,info_queue,center)
+        return {vars = {
+            G.GAME.probabilities.normal,
+            center.ability.extra.odds,
+            center.ability.extra.achip
+        }}
+    end,
 
+    calculate = function(self,card,context)
+        if context.joker_main and pseudorandom('terra') < G.GAME.probabilities.normal/card.ability.extra.odds then
+            return {
+                message = "Test"
+            }
+        end
+    --end of calc funct
+    end
+}
+-- Rhodes Island back
 SMODS.Back {
 	key = "rhodes",
 	atlas = "Jokers",
