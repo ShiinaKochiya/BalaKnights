@@ -252,29 +252,71 @@ SMODS.Joker{
         text = {
             '{C:green}#1# in #2#{} chance for',
             'Stone cards to give',
-            'extra +50 chips'
+            'extra {C:chips}+50 chips{} and',
+            '{C:mult}+#3#{} Mult',
         }
     },
     atlas = 'Jokers',
     pos = { x=5, y=0 },
     config = {
         extra = {
-            odds = 2,
-            achip = 50
+            odds = 5,
+            achip = 50,
+            amult = 4,
         }
     },
     loc_vars = function(self,info_queue,center)
         return {vars = {
             G.GAME.probabilities.normal,
             center.ability.extra.odds,
-            center.ability.extra.achip
+            center.ability.extra.achip,
+            center.ability.extra.amult
         }}
     end,
 
     calculate = function(self,card,context)
-        if context.joker_main and pseudorandom('terra') < G.GAME.probabilities.normal/card.ability.extra.odds then
+        if context.individual and context.cardarea == G.play and pseudorandom('mudrock') < G.GAME.probabilities.normal/card.ability.extra.odds then
+            if context.other_card.config.center == G.P_CENTERS.m_stone then
             return {
-                message = "Test"
+                chips = card.ability.extra.achip,
+                mult_mod = card.ability.extra.amult,
+                message = "Desecrated"
+            }
+            end
+        end
+    --end of calc funct
+    end
+}
+--Joker: uhh, Phoebe?
+SMODS.Joker{
+    key = 'Phoebe',
+    loc_txt = {
+        name = 'Phoebe',
+        text = {
+            '{s:0.8}Uhh, Phoebe?{}',
+            'idk this Joker definitely',
+            'does something.',
+            'Actually, give{C:mult, s:0.4} +#1# mult{}'
+        }
+    },
+    atlas = 'Jokers',
+    pos = { x=0, y=1 },
+    config = {
+        extra = {
+            mults = 10
+        }
+    },
+    loc_vars = function(self,info_queue,center)
+        return {vars = {
+            center.ability.extra.mults,
+        }}
+    end,
+
+    calculate = function(self,card,context)
+        if context.joker_main then
+            return {
+                mult_mod = card.ability.extra.mults,
+                message = "Believe"
             }
         end
     --end of calc funct
