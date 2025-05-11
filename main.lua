@@ -1,7 +1,7 @@
 --- STEAMODDED HEADER
 --- MOD_NAME: BalaKnights
 --- MOD_ID: balaknights
---- MOD_AUTHOR: [ShiinaKochiya]
+--- MOD_AUTHOR: [Shiina Kochiya]
 --- MOD_DESCRIPTION: Balatro but Arknights
 --- PREFIX: blk
 ----------------------------------------------
