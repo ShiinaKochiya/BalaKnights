@@ -318,6 +318,8 @@ SMODS.Joker{
             amult = 2,
         }
     },
+    rarity = 2,
+    cost = 5,
     loc_vars = function(self,info_queue,center)
         return {vars = {
             G.GAME.probabilities.normal,
