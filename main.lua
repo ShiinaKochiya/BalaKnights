@@ -217,7 +217,7 @@ SMODS.Joker{
     loc_txt = {
         name = 'Terra Investment Masterclass',
         text = {
-            '{s:1.4}It cannot get any better than this!{}',
+            '{s:1.4,E:1}It cannot get any better than this!{}',
             'If you have {C:gold}25${}, gain {C:attention}1{} free {C:green}reroll{}',
             '{C:inactive, C:grey}Currently having #1# free reroll{}'
         }
@@ -303,10 +303,10 @@ SMODS.Joker{
     loc_txt = {
         name = 'Mudrock',
         text = {
-            '{C:green}#1# in #2#{} chance for',
-            'Stone cards to give',
-            'extra {C:chips}+#3# chips{} and',
-            '{C:mult}+#4#{} Mult',
+            '{C:green}#1# in #2#{} chance for Stone',
+            'cards to permanently gain',
+            'extra {C:chips}+#3# chips{} and {C:mult}+#4#{} Mult',
+            'after being scored',
         }
     },
     atlas = 'Jokers',
@@ -314,8 +314,8 @@ SMODS.Joker{
     config = {
         extra = {
             odds = 5,
-            achip = 50,
-            amult = 5,
+            achip = 25,
+            amult = 2,
         }
     },
     loc_vars = function(self,info_queue,center)
@@ -330,10 +330,11 @@ SMODS.Joker{
     calculate = function(self,card,context)
         if context.individual and context.cardarea == G.play and pseudorandom('mudrock') < G.GAME.probabilities.normal/card.ability.extra.odds then
             if context.other_card.config.center == G.P_CENTERS.m_stone then
+                context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) + card.ability.extra.achip
+                context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.amult
             return {
-                chips = card.ability.extra.achip,
-                mult_mod = card.ability.extra.amult,
-                message = "Desecrated"
+                message = "Desecrated",
+                card = card
             }
             end
         end
@@ -344,7 +345,7 @@ SMODS.Joker{
 SMODS.Joker{
     key = 'Phoebe',
     loc_txt = {
-        name = 'Phoebe',
+        name = 'Sentinel Acolyte',
         text = {
             '{s:0.8}Uhh, Phoebe?{}',
             'idk this Joker definitely',
@@ -404,8 +405,7 @@ SMODS.Joker{
     calculate = function(self,card,context)
         if context.joker_main then
             return {
-                mult_mod = card.ability.extra.mults,
-                message = "Believe"
+                message = "KILL ALL SEABORNS"
             }
         end
     --end of calc funct
