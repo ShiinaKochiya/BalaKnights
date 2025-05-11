@@ -354,6 +354,42 @@ SMODS.Joker{
     },
     atlas = 'Jokers',
     pos = { x=0, y=1 },
+    rarity = 3,
+    cost = 99,
+    config = {
+        extra = {
+            mults = 1
+        }
+    },
+    loc_vars = function(self,info_queue,center)
+        return {vars = {
+            center.ability.extra.mults,
+        }}
+    end,
+
+    calculate = function(self,card,context)
+        if context.joker_main then
+            return {
+                mult_mod = card.ability.extra.mults,
+                message = "Believe"
+            }
+        end
+    --end of calc funct
+    end
+}
+--Joker: IS3 dices
+SMODS.Joker{
+    key = 'dice',
+    loc_txt = {
+        name = 'Die roll of Fate',
+        text = {
+            '1 in 6 chance to permanently give +2 mult',
+            '1 in 6 chance to ruin the run',
+            'This joker is not working, because I havent make it work yet'
+        }
+    },
+    atlas = 'Jokers',
+    pos = { x=1, y=1 },
     config = {
         extra = {
             mults = 10
