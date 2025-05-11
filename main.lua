@@ -217,29 +217,82 @@ SMODS.Joker{
     loc_txt = {
         name = 'Terra Investment Masterclass',
         text = {
-            'Test Joker',
-            '1 in #1# chance to',
-            'say "Test"'
+            '{s:1.4}It cannot get any better than this!{}',
+            'If you have {C:gold}25${}, gain {C:attention}1{} free {C:green}reroll{}',
+            '{C:inactive, C:grey}Currently having #1# free reroll{}'
         }
     },
     atlas = 'Jokers',
     pos = { x=4, y=0 },
     config = {
         extra = {
-            odds = 2
+            current_reroll = 0,
+            odds = 2,
+            thres1 = 25,
+            reroll = 1,
+            check_reroll = false,
+            thres2 = 100,
+
         }
     },
-    loc_vars = function(self,info_queue,center)
+        loc_vars = function(self,info_queue,center)
         return {vars = {
+            center.ability.extra.current_reroll,
             center.ability.extra.odds,
+            center.ability.extra.thres1,
+            center.ability.extra.reroll,
+            center.ability.extra.check_reroll,
+            center.ability.extra.thres2
         }}
     end,
-
+    add_to_deck = function(self, card, from_debuff)
+        if not check_reroll then
+            if G.GAME.dollars >= card.ability.extra.thres1 then 
+                check_reroll = true
+                card.ability.extra.current_reroll = card.ability.extra.current_reroll + 1
+                SMODS.change_free_rerolls(card.ability.extra.reroll)
+            end
+        end
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        if G.GAME.dollars >= card.ability.extra.thres1 then 
+            card.ability.extra.current_reroll = card.ability.extra.current_reroll - 1
+            SMODS.change_free_rerolls(-card.ability.extra.reroll)
+        end
+    end,
     calculate = function(self,card,context)
-        if context.joker_main and pseudorandom('terra') < G.GAME.probabilities.normal/card.ability.extra.odds then
-            return {
-                message = "Test"
-            }
+        if context.reroll_shop then
+            --check if enough money to have free reroll
+            if not check_reroll then
+                if G.GAME.dollars >= card.ability.extra.thres1 then 
+                    check_reroll = true
+                    card.ability.extra.current_reroll = card.ability.extra.current_reroll + 1
+                    SMODS.change_free_rerolls(card.ability.extra.reroll)
+                end
+            end
+            --check if not enough money to have free reroll
+            if check_reroll and G.GAME.dollars < card.ability.extra.thres1 then 
+                    check_reroll = false
+                    card.ability.extra.current_reroll = card.ability.extra.current_reroll - 1
+                    SMODS.change_free_rerolls(-card.ability.extra.reroll)
+                end
+        end
+
+        if context.end_of_round then
+            --check if enough money to have free reroll
+            if not check_reroll then
+                if G.GAME.dollars >= card.ability.extra.thres1 then 
+                    check_reroll = true
+                    card.ability.extra.current_reroll = card.ability.extra.current_reroll + 1
+                    SMODS.change_free_rerolls(card.ability.extra.reroll)
+                end
+            end
+            --check if not enough money to have free reroll
+            if check_reroll and G.GAME.dollars < card.ability.extra.thres1 then 
+                    check_reroll = false
+                    card.ability.extra.current_reroll = card.ability.extra.current_reroll - 1
+                    SMODS.change_free_rerolls(-card.ability.extra.reroll)
+                end
         end
     --end of calc funct
     end
@@ -252,8 +305,8 @@ SMODS.Joker{
         text = {
             '{C:green}#1# in #2#{} chance for',
             'Stone cards to give',
-            'extra {C:chips}+50 chips{} and',
-            '{C:mult}+#3#{} Mult',
+            'extra {C:chips}+#3# chips{} and',
+            '{C:mult}+#4#{} Mult',
         }
     },
     atlas = 'Jokers',
@@ -262,7 +315,7 @@ SMODS.Joker{
         extra = {
             odds = 5,
             achip = 50,
-            amult = 4,
+            amult = 5,
         }
     },
     loc_vars = function(self,info_queue,center)
