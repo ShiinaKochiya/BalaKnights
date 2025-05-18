@@ -15,7 +15,25 @@ SMODS.Atlas{
     px = 71, 
     py = 95 
 }
-
+--Random Rarity Pool
+SMODS.Rarity {
+    key = "3_star",
+    loc_txt = {
+        name = "3 Star"
+    },
+    badge_colour = G.C.UI.TEXT_DARK,
+{
+    ["Joker"] = { rate = 1.7 },
+},
+--Testing with ObjectPool
+SMODS.ObjectType{
+    key = "pool",
+    rarities = {
+        key = "j_blk_amiyi",
+        rate = 2.0
+    }
+}
+}
 -- Joker: Amiya
 SMODS.Joker{
     key = 'amiyi',
@@ -33,6 +51,7 @@ SMODS.Joker{
     },
     atlas = 'Jokers',
     pos = { x=0, y=0 },
+    rarity = "blk_3_star",
     config = {
         extra = {
             chips = 60,
