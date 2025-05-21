@@ -1,37 +1,14 @@
---- STEAMODDED HEADER
---- MOD_NAME: BalaKnights
---- MOD_ID: balaknights
---- MOD_AUTHOR: [ShiinaKochiya]
---- MOD_DESCRIPTION: Balatro but Arknights
---- PREFIX: blk
-----------------------------------------------
-------------MOD CODE -------------------------
-
-
--- Sprites
-SMODS.Atlas{
-    key = 'Jokers',
-    path = 'Joker.png',
-    px = 71, 
-    py = 95 
+SMODS.Atlas {
+    key = "Jokers",
+	path = "Joker.png",
+    px = 71,
+    py = 95
 }
 
--- Joker: Amiya
+-- Amiya
 SMODS.Joker{
-    key = 'amiyi',
-    loc_txt = {
-        name = 'Amiya',
-        text = {
-            '{C:chips}+60{} Chips. This Donke gain',
-            '{C:chips}+20{} Chips per Kings discarded.',
-            "If the first discarded hand",
-            'only contains a single King,',
-            "add a permanent copy of that",
-            "card and draw into hand",
-            "{C:inactive, C:grey}(Currently {C:chips}+#1#{C:inactive} Chips)"
-        }
-    },
-    atlas = 'Jokers',
+    key = "amiyi",
+    atlas = "Jokers",
     pos = { x=0, y=0 },
     config = {
         extra = {
@@ -92,22 +69,13 @@ SMODS.Joker{
     end
 }
 
-
--- Joker: Theresa/King of Sarkaz
-
+-- Theresa
 SMODS.Joker{
-    key = 'theresa',
+    key = "theresa",
     loc_txt = {
-        name = 'King of Sarkaz',
-        text = {
-            '{C:mult}+#1#{} Mult, each Queen held in',
-            "hand give {C:mult}+#2#{} Mult permanently.",
-            "If the card is {C:attention}Queen{} of {C:mult}Hearts{},",
-            "double the current Mult amount instead",
-            "{C:inactive, C:grey}(Currently {C:mult}+#3#{C:inactive} Mult)"
-        }
+        
     },
-    atlas = 'Jokers',
+    atlas = "Jokers",
     pos = { x=2, y=0 },
     config = {
         extra = {
@@ -121,17 +89,17 @@ SMODS.Joker{
     end,
 
     calculate = function(self,card,context) 
-    if context.individual and context.cardarea == G.hand and not context.end_of_round then
-             if context.other_card:get_id() == 12 then
+        if context.individual and context.cardarea == G.hand and not context.end_of_round then
+            if context.other_card:get_id() == 12 then
                 if context.other_card:is_suit("Hearts") then
                     card.ability.extra.tmult = card.ability.extra.tmult * 2
                     return {
                         message = "Live"
-                   }
+                    }
                 else
                     card.ability.extra.tmult = card.ability.extra.tmult + card.ability.extra.amult
                     return {
-                         message = "Served"
+                        message = "Served"
                     }
             end
         end
@@ -141,46 +109,44 @@ SMODS.Joker{
         return{
             card = card,
             mult_mod = card.ability.extra.tmult,
-            message = '+' .. card.ability.extra.tmult,
+            message = "+" .. card.ability.extra.tmult,
             colour = G.C.MULT,
         }
         end
     end
 }
 
--- Joker: PRTS
-SMODS.Joker{
-    key = 'prts',
-    loc_txt = {
-        name = 'PRTS',
-        text = {
-            'When a {C:attention}King{} or {C:attention}Queen{} get scored',
-            "immediately destroy that card and",
-            "this Joker gain {X:mult,C:white}X#1#{} Mult",
-            "{C:inactive, C:grey}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)"
-        }
-    },
-    atlas = 'Jokers',
-    rarity = 4,
-    pos = { x=1, y=0 },
-    config = {
-        extra = {
-            Xmult = 2.5,
-            mult = 0
-        }
-    },
-    loc_vars = function(self,info_queue,center)
-        return {vars = {
-            center.ability.extra.Xmult,
-            center.ability.extra.mult
-            }
-        }
-    end,
+-- PRTS
+SMODS.Joker {
+    key = "prts",
 
-    calculate = function(self,card,context)
-        if context.individual and context.cardarea == G.play then
+	blueprint_compat = true,
+	perishable_compat = false,
+	eternal_compat = true,
+
+	rarity = 4,
+	cost = 999,
+	unlocked = true,
+	discovered = true,
+
+	config = { extra = { xmult = 1, xmult_add = 1 } },
+
+	atlas = "Jokers",
+	pos = { x = 1, y = 0 },
+
+	loc_vars = function(_, _, card)
+		return {
+			vars = {
+				card.ability.extra.xmult,
+				card.ability.extra.xmult_add,
+			}
+		}
+	end,
+
+	calculate = function(self, card, context)
+		if context.individual and context.cardarea == G.play then
             if context.other_card:get_id() == 12 or context.other_card:get_id() == 13 then
-                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.Xmult
+                card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_add
                 return {
                     message = "Upgraded"
                 }
@@ -198,38 +164,150 @@ SMODS.Joker{
         end
 
         if context.joker_main then
-            return{
+            return {
                 card = card,
-                Xmult_mod = card.ability.extra.mult,
-                message = 'X' .. card.ability.extra.mult,
+                Xmult_mod = card.ability.extra.xmult,
+                message = "X" .. card.ability.extra.xmult,
                 colour = G.C.MULT,
-                --print(context.poker_hands)
-                }
-            end
+            }
         end
+	end
 }
 
+-- Corrupted PRTS deck
+SMODS.Back {
+	key = "corrupted_prts",
+	atlas = "Jokers",
+    unlocked = true,
+    pos = { x = 1, y = 0 },
+
+	config = {
+		extra = {
+			ante_scaling = 2,
+			spectral_rate = 2,
+			vouchers = { 
+                "v_overstock_norm", "v_overstock_plus",
+                "v_clearance_sale", "v_liquidation",
+                "v_hone", "v_glow_up",
+                "v_reroll_surplus", "v_reroll_glut",
+                "v_crystal_ball", "v_omen_globe",
+                "v_telescope", "v_observatory",
+                "v_grabber", "v_nacho_tong",
+                "v_wasteful", "v_recyclomancy",
+                "v_tarot_merchant", "v_tarot_tycoon",
+                "v_planet_merchant", "v_planet_tycoon",
+                "v_seed_money", "v_money_tree",
+                "v_blank", "v_antimatter",
+                "v_magic_trick", "v_illusion",
+                "v_paint_brush", "v_palette",
+                "v_retcon", "v_directors_cut"
+            },
+			consumables = { 
+                "c_cryptid", "c_cryptid", "c_cryptid", "c_cryptid", "c_cryptid",
+            }
+		}
+	},
+
+    apply = function(self, back)
+        G.GAME.starting_params.ante_scaling = self.config.extra.ante_scaling
+        G.GAME.spectral_rate = self.config.extra.spectral_rate
+        G.GAME.starting_params.dollars = 150
+        G.GAME.starting_params.consumable_slots = 10
+
+		-- add vouchers
+		for k, v in pairs(self.config.extra.vouchers) do
+			G.GAME.used_vouchers[v] = true
+			G.GAME.starting_voucher_count = (G.GAME.starting_voucher_count or 0) + 30
+			G.E_MANAGER:add_event(Event({
+				func = function()
+					Card.apply_to_run(nil, G.P_CENTERS[v])
+					return true
+				end
+			}))
+		end
+
+		-- consumables
+		G.E_MANAGER:add_event(Event({
+            func = function()
+                for k, v in ipairs(self.config.extra.consumables) do
+                    SMODS.add_card({ key = v })
+                end
+                return true
+            end
+        }))
+
+		-- jokers
+		G.E_MANAGER:add_event(Event({
+			func = function ()
+				--U.M.I. created
+				local card = SMODS.create_card({
+					set = "Joker",
+					area = G.jokers,
+					key = "j_blk_prts",
+					stickers = { "eternal" },
+				})
+
+				card:set_edition({negative = true}, true)
+				card:add_to_deck()
+				G.jokers:emplace(card)
+
+				return true
+			end
+		}))
+
+		-- Polychrome queen of hearts.
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                for i = #G.playing_cards, 1, -1 do
+                    local modifier = G.P_CENTERS.m_glass
+                    local edition = {polychrome = true}
+                    local rank = "Q"
+                    local suit = "H"
+                    local seal = "Red"
+
+                    G.playing_cards[i]:set_base(G.P_CARDS[suit .. "_" .. rank])
+                    G.playing_cards[i]:set_ability(modifier)
+                    G.playing_cards[i]:set_edition(edition, true, true)
+                    G.playing_cards[i]:set_seal(seal, true, true)
+                end
+
+				return true
+            end
+        }))
+    end,
+}
+
+-- RI deck
 SMODS.Back {
 	key = "rhodes",
 	atlas = "Jokers",
-    loc_txt = {
-        name = 'Rhodes Island',
-        text = {
-            "Start with triple {C:attention}Face{}",
-            "{C:attention}cards{} in your hand",
-            "along with an",
-            "{C:legendary}Eternal{} {C:dark_edition}Negative{} PRTS Joker"
-        }
-    },
-    loc_args = {localize{type = 'name_text', key = 'v_magic_trick', set = 'Voucher'}, localize{type = 'name_text', key = 'v_illusion', set = 'Voucher'}},
-	pos = { x = 3, y = 0},
+    config = {
+		extra = {
+			vouchers = { 
+                "v_magic_trick", "v_illusion",
+            }
+		}
+	},
+
+    pos = { x = 3, y = 0},
     apply = function(self)
         G.E_MANAGER:add_event(Event({
             func = function()
-            	local newcards = {}
+                for k, v in pairs(self.config.extra.vouchers) do
+                    G.GAME.used_vouchers[v] = true
+                    G.GAME.starting_voucher_count = (G.GAME.starting_voucher_count or 0) + 30
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            Card.apply_to_run(nil, G.P_CENTERS[v])
+                            return true
+                        end
+                    }))
+                end
+
+                local newcards = {}
                 --Triples face cards
                 for i = 1, #G.playing_cards do
-      				local card = G.playing_cards[i]
+                    local card = G.playing_cards[i]
                     if card:get_id() == 12 or card:get_id() == 13 or card:get_id() == 11 then
                         local _card = copy_card(card, nil, nil, G.playing_card)
                         _card:add_to_deck()
@@ -239,13 +317,13 @@ SMODS.Back {
                         G.deck:emplace(_card)
                     end
                 end
-                
+
                 --PRTS created
                 local card = SMODS.create_card({
-                    set = 'Joker',
+                    set = "Joker",
                     area = G.jokers,
-                    key = 'j_blk_prts',
-                    stickers = { 'eternal' },
+                    key = "j_blk_prts",
+                    stickers = { "eternal" },
                 })
                 card:set_edition({negative = true}, true)
                 card:add_to_deck()
@@ -255,85 +333,3 @@ SMODS.Back {
         }))
     end
 }
-
-SMODS.Back {
-	key = "debug",
-	atlas = "Jokers",
-    loc_txt = {
-        name = 'Debug Deck',
-        text = {
-            "Same as RI Deck but also add Theresa and Amiya"
-        }
-    },
-    loc_args = {
-        localize{type = 'name_text', key = 'v_magic_trick', set = 'Voucher'}, 
-        localize{type = 'name_text', key = 'v_illusion', set = 'Voucher'}
-    },
-	pos = { x = 3, y = 0},
-    apply = function(self, back)
-        G.E_MANAGER:add_event(Event({
-            func = function()
-            	local newcards = {}
-                --Tripples the face cards
-                for i = 1, #G.playing_cards do
-      				local card = G.playing_cards[i]
-                    if card:get_id() == 12 or card:get_id() == 13 or card:get_id() == 11 then
-                        local _card = copy_card(card, nil, nil, G.playing_card)
-                        _card:add_to_deck()
-                        G.deck.config.card_limit = G.deck.config.card_limit + 1
-                        table.insert(G.playing_cards, _card)
-                        table.insert(G.playing_cards, _card)
-                        G.deck:emplace(_card)
-                    end
-                end
-                
-                --PRTS created
-                local card = SMODS.create_card({
-                    set = 'Joker',
-                    area = G.jokers,
-                    key = 'j_blk_prts',
-                    stickers = { 'eternal' },
-                })
-                card:set_edition({negative = true}, true)
-                card:add_to_deck()
-                G.jokers:emplace(card)
-
-                --Amiya created
-                local card = SMODS.create_card({
-                    set = 'Joker',
-                    area = G.jokers,
-                    key = 'j_blk_amiyi',
-                })
-                card:add_to_deck()
-                G.jokers:emplace(card)
-
-                --Theresa created
-                local card = SMODS.create_card({
-                    set = 'Joker',
-                    area = G.jokers,
-                    key = 'j_blk_theresa',
-                })
-                card:add_to_deck()
-                G.jokers:emplace(card)
-                
-                --[[for k, v in pairs(back.effect.config.vouchers) do
-                    G.GAME.used_vouchers[v ] = true
-                    G.GAME.starting_voucher_count = (G.GAME.starting_voucher_count or 0) + 1
-                    Card.apply_to_run(nil, G.P_CENTERS[v])
-                end
-                
-                Commenting this until I found a way to add vouchers
-                --]]
-                
-                return true
-            end
-        }))
-    end
-}
-
-function values(t)
-    local i = 0
-    return function() i = i + 1; return t[i] end
-  end
-----------------------------------------------
-------------MOD CODE END----------------------
