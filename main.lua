@@ -1,10 +1,16 @@
+--Atlas
 SMODS.Atlas {
     key = "Jokers",
 	path = "Joker.png",
     px = 71,
     py = 95
 }
-
+SMODS.Atlas {
+    key = "Back",
+	path = "Back.png",
+    px = 71,
+    py = 95
+}
 -- Amiya
 SMODS.Joker{
     key = "amiyi",
@@ -280,7 +286,7 @@ SMODS.Back {
 -- RI deck
 SMODS.Back {
 	key = "rhodes",
-	atlas = "Jokers",
+	atlas = "Back",
     config = {
 		extra = {
 			vouchers = { 
@@ -289,7 +295,7 @@ SMODS.Back {
 		}
 	},
 
-    pos = { x = 3, y = 0},
+    pos = { x = 1, y = 0},
     apply = function(self)
         G.E_MANAGER:add_event(Event({
             func = function()
