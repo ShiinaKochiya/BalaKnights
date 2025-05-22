@@ -417,7 +417,7 @@ SMODS.Joker{
 }
 --Joker: Mudrock
 SMODS.Joker{
-    key = 'Mudrock',
+    key = 'mudrock',
     loc_txt = {
         name = 'Mudrock',
         text = {

@@ -24,7 +24,7 @@ return {
                     "{C:mult}+#1#{} Mult, each Queen held in",
                     "hand give {C:mult}+#2#{} Mult permanently.",
                     "If the card is {C:attention}Queen{} of {C:mult}Hearts{},",
-                    "double the current Mult amount instead",
+                    "multiply the current Mult by 1.5 instead",
                     "{C:inactive, C:grey}(Currently {C:mult}+#3#{C:inactive} Mult)"
                 }
             },
@@ -43,10 +43,29 @@ return {
             j_blk_prts = {
                 name = "PRTS",
                 text = {
-                    "{C:attention}Destroy{} all played {C:attention}Queen{} of {C:mult}Hearts{}, gain {X:mult,C:white}X#2#{} Mult each.",
+                    "{C:attention}Destroy{} all scored {C:attention}Kings{} and {C:attention}Queen{},",
+                    'gain {X:mult,C:white}X#2#{} Mult each.',
                     "{C:inactive, C:grey}(Currently {X:mult,C:white}X#1#{}{C:inactive} Mult){}"
                 }
             },
+            j_blk_mudrock = {
+                name = 'Mudrock',
+                text = {
+                    '{C:green}#1# in #2#{} chance for Stone',
+                    'cards to permanently gain',
+                    'extra {C:chips}+#3# chips{} and {C:mult}+#4#{} Mult',
+                    'after being scored',
+                }
+            },
+            j_blk_phoebe = {
+                name = 'Sentinel Acolyte',
+                text = {
+                    '{s:0.8}Uhh, Phoebe?{}',
+                    'idk this Joker definitely',
+                    'does something.',
+                    'Actually, give{C:mult, s:0.4} +#1# mult{}'
+                }
+            }
         },
     },
 }

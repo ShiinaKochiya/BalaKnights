@@ -16,6 +16,7 @@ SMODS.Joker{
     key = "amiyi",
     atlas = "Jokers",
     pos = { x=0, y=0 },
+    blueprint_compat = true,
     config = {
         extra = {
             chips = 60,
@@ -78,15 +79,13 @@ SMODS.Joker{
 -- Theresa
 SMODS.Joker{
     key = "theresa",
-    loc_txt = {
-        
-    },
+    blueprint_compat = true,
     atlas = "Jokers",
     pos = { x=2, y=0 },
     config = {
         extra = {
             mult = 4,
-            amult = 2,
+            amult = 4,
             tmult = 4
         }
     },
@@ -98,7 +97,7 @@ SMODS.Joker{
         if context.individual and context.cardarea == G.hand and not context.end_of_round then
             if context.other_card:get_id() == 12 then
                 if context.other_card:is_suit("Hearts") then
-                    card.ability.extra.tmult = card.ability.extra.tmult * 2
+                    card.ability.extra.tmult = card.ability.extra.tmult * 1.5
                     return {
                         message = "Live"
                     }
@@ -179,7 +178,70 @@ SMODS.Joker {
         end
 	end
 }
+--Joker: Mudrock
+SMODS.Joker{
+    key = 'mudrock',
+    atlas = 'Jokers',
+    pos = { x=4, y=0 },
+    config = {
+        extra = {
+            odds = 5,
+            achip = 25,
+            amult = 2,
+        }
+    },
+    rarity = 2,
+    cost = 5,
+    loc_vars = function(self,info_queue,center)
+        return {vars = {
+            G.GAME.probabilities.normal,
+            center.ability.extra.odds,
+            center.ability.extra.achip,
+            center.ability.extra.amult
+        }}
+    end,
 
+    calculate = function(self,card,context)
+        if context.individual and context.cardarea == G.play and pseudorandom('mudrock') < G.GAME.probabilities.normal/card.ability.extra.odds then
+            if context.other_card.config.center == G.P_CENTERS.m_stone then
+                context.other_card.ability.perma_bonus = (context.other_card.ability.perma_bonus or 0) + card.ability.extra.achip
+                context.other_card.ability.perma_mult = (context.other_card.ability.perma_mult or 0) + card.ability.extra.amult
+            return {
+                message = "Desecrated",
+                card = card
+            }
+            end
+        end
+    --end of calc funct
+    end
+}
+SMODS.Joker{
+    key = 'phoebe',
+    atlas = 'Jokers',
+    pos = { x=0, y=1 },
+    rarity = 3,
+    cost = 999,
+    config = {
+        extra = {
+            mults = 1
+        }
+    },
+    loc_vars = function(self,info_queue,center)
+        return {vars = {
+            center.ability.extra.mults,
+        }}
+    end,
+
+    calculate = function(self,card,context)
+        if context.joker_main then
+            return {
+                mult_mod = card.ability.extra.mults,
+                message = "Believe"
+            }
+        end
+    --end of calc funct
+    end
+}
 -- Corrupted PRTS deck
 SMODS.Back {
 	key = "corrupted_prts",
