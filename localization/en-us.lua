@@ -1,11 +1,10 @@
 return {
     descriptions = {
         Back = {
-            b_blk_corrupted_prts = {
-                name = "Don't fight with PRTS.",
+            b_blk_haimao = {
+                name = "Haimao.",
                 text = {
-                    "{C:mult}WHAT IS YOUR PLAN AGAINST ME NOW,{}",
-                    "{C:mult}DEAR{} MY {C:attention}DOCTOR{}?",
+                    "{C:attention}ALL!!!{}",
                 }
             },
             b_blk_rhodes = {
@@ -65,7 +64,19 @@ return {
                     'does something.',
                     'Actually, give{C:mult, s:0.4} +#1# mult{}'
                 }
+            },
+            j_blk_cannot = {
+                name = "Cannot Goodenough",
+                text = {
+                    "You may die,",
+                    "{C:attention}I always win.{}"
+                }
             }
         },
     },
+    misc = {
+        dictionary = {
+            ph_mr_bones = "Rigged by Mr. Cannot"
+        }
+    }
 }
