@@ -71,12 +71,27 @@ return {
                     "You may die,",
                     "{C:attention}I always win.{}"
                 }
+            },
+            j_blk_swire = {
+                name = "Swire the Elegent Wit",
+                text = {
+                    'Prevents Death if you possess at least',
+                    '{C:attention}$#1#{}. Double the amount required',
+                    'after each save.'
+                }
+            },
+            j_blk_jessica = {
+                name = "Jessica",
+                text = {
+                    'debug joker',
+                    'this catto gives you 99 free rerolls',
+                }
             }
         },
     },
     misc = {
         dictionary = {
-            ph_mr_bones = "Rigged by Mr. Cannot"
+            ph_ms_swire = "Saved by Swire the Elegent Wit"
         }
     }
 }
