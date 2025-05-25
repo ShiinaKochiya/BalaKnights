@@ -23,7 +23,7 @@ SMODS.Joker {
         card:set_cost()
     end,
     calculate = function(self,card,context)
-        if context.end_of_round and context.game_over and context.main_eval then
+        if context.end_of_round and context.game_over and context.main_eval and G.GAME.dollars >= card.ability.extra.mone then
             G.E_MANAGER:add_event(Event({
                 func = function()
                     G.hand_text_area.blind_chips:juice_up()
