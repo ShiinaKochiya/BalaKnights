@@ -19,7 +19,7 @@ SMODS.Joker {
         if context.joker_main then
             return {
                 mult_mod = card.ability.extra.mults,
-                message = card.ability.cost
+                message = "Believe"
             }
         end
     end
