@@ -8,13 +8,19 @@ A simple Balatro mod, adding a few Jokers and Deck based on Arknights characters
 - [Steamodded](https://github.com/Steamodded/smods) (Of course every Balatro mod need Steamodded)
 
 ## What this mod added:
-- 3 Jokers:
+- 7 Jokers:
   + Queen of Babel: Gain permanent flat amount of Mults per Queen in hand
   + PRTS: Gain permanent xMult per Kings and Queens played and scored, after which destroy the cards
   + Amiya: Give flat amount of Chips, gain extra Chips per discarded Kings. If the first discarded hand only contain a single King, create a copy of that card and draw to hand
-- 1 Deck:
+  + Swire the Elegant Wit: Saves the run from failing if possess enough money. Consume the amount of money required and double the amount after each save.
+  + Mudrock: Chances for played Stone Cards to permanently gain extra chips and mults.
+  + Sentinel Acolyte: Wait what? Phoebe why are you here???
+  + Jessica: Debug Joker, will be changed later. Grants 99 free rerolls in shop.
+
+- 2 Decks:
   + Rhodes Island deck: Starts with triple the amount of face cards, with an Eternal Negative PRTS Joker
-![image](https://media.discordapp.net/attachments/858801860186341387/1369360473161470012/balatro_1.png?ex=681b93d2&is=681a4252&hm=11fd825c209c1f195fe18bdba78bbe87d8a8f7ad3ca9a2d2b4d580474922b4a0&=&format=webp&quality=lossless&width=1423&height=800)
+  + Haimao Deck: ALL!!!
+
 ## How to install mod (Windows):
 1. Make sure that Steamodded is installed and running
 2. Navigate to `%appdata%` and find .`/Balatro `
