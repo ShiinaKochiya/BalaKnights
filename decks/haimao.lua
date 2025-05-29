@@ -88,7 +88,7 @@ SMODS.Back {
 				local card = SMODS.create_card({
 					set = "Joker",
 					area = G.jokers,    
-					key = "j_blk_cannot",
+					key = "j_blk_swire",
 				})
 
 				card:add_to_deck()
