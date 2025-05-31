@@ -15,6 +15,10 @@ return {
                     "{C:attention}Magic Trick{} and {C:attention}Illusion{} Vouchers."
                 }
             },
+            b_blk_random = {
+                name = "Random",
+                text = { "Play like you never did before" }
+            }
         },
         Joker = {
             j_blk_theresa = {

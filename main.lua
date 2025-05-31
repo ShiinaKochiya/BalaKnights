@@ -25,3 +25,4 @@ assert(SMODS.load_file("jokers/swire.lua"))()
 -- Decks
 assert(SMODS.load_file("decks/haimao.lua"))()
 assert(SMODS.load_file("decks/rhodes.lua"))()
+assert(SMODS.load_file("decks/random.lua"))()
