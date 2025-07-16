@@ -15,7 +15,7 @@ SMODS.Atlas {
 
 -- Jokers
 assert(SMODS.load_file("jokers/amiyi.lua"))()
---assert(SMODS.load_file("jokers/cannot.lua"))()
+assert(SMODS.load_file("jokers/cannot.lua"))()
 assert(SMODS.load_file("jokers/mudrock.lua"))()
 assert(SMODS.load_file("jokers/phoebe.lua"))()
 assert(SMODS.load_file("jokers/jessica.lua"))()

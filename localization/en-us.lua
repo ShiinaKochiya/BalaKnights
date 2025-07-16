@@ -72,8 +72,8 @@ return {
             j_blk_cannot = {
                 name = "Cannot Goodenough",
                 text = {
-                    "You may die,",
-                    "{C:attention}I always win.{}"
+                    "Either {C:attention}it happens{}, or {C:attention}not{}",
+                    "{C:inactive}(All probabilities is now {}{C:green}1 in 2{}{C:inactive}){}"
                 }
             },
             j_blk_swire = {
