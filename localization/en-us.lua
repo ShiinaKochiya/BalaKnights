@@ -96,6 +96,18 @@ return {
     misc = {
         dictionary = {
             ph_ms_swire = "Saved by Swire the Elegent Wit"
+        },
+        challenge_names = {
+            c_blk_all_in        = "All In (Breakfast)",
+            c_blk_all_in_plus   = "All In (Allowance)",
+            c_blk_all_in_hard   = "All In (House)",
+            c_blk_all_in_ex     = "All In (ALL)",
+            c_blk_all_in_ex_ex  = "All In (ALL++)",
+        },
+        v_text = {
+            ch_c_all_in_rule0 = {
+                "Starts with {C:attention}Cannot Goodenough{}"
+            },
         }
     }
 }

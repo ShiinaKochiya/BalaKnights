@@ -21,6 +21,9 @@ A simple Balatro mod, adding a few Jokers and Deck based on Arknights characters
   + Rhodes Island deck: Starts with triple the amount of face cards, with an Eternal Negative PRTS Joker
   + Haimao Deck: ALL!!!
 
+- 5 challenges:
+  + A series of 5 "ALL IN" challenges with increasing difficulty.
+
 ## How to install mod (Windows):
 1. Make sure that Steamodded is installed and running
 2. Navigate to `%appdata%` and find .`/Balatro `
