@@ -11,14 +11,14 @@ end
 
 -- Haimao Deck
 SMODS.Back {
-	key = "haimao",
-	atlas = "Back",
+    key = "haimao",
+    atlas = "Back",
     unlocked = true,
     pos = { x = 0, y = 0 },
 
-	config = {
-		extra = {
-			vouchers = { 
+    config = {
+        extra = {
+            vouchers = { 
                 "v_overstock_norm", "v_overstock_plus",
                 "v_clearance_sale", "v_liquidation",
                 "v_hone", "v_glow_up",
@@ -35,7 +35,7 @@ SMODS.Back {
                 "v_paint_brush", "v_palette",
                 "v_retcon", "v_directors_cut"
             },
-			consumables = {
+            consumables = {
                 -- Spectrals 
                 "c_cryptid", "c_ankh", "c_familiar", "c_grim", "c_incantation",
                 "c_talisman", "c_aura", "c_wraith", "c_sigil", "c_ouija",
@@ -52,27 +52,24 @@ SMODS.Back {
                 "c_jupiter", "c_earth", "c_mars", "c_neptune", "c_planet_x",
                 "c_eris", "c_ceres"
             }
-		}
-	},
+        }
+    },
 
     apply = function(self, back)
-        -- G.GAME.starting_params.ante_scaling = 200000
-        -- G.GAME.starting_params.hands = 1
+        -- add vouchers
+        for k, v in pairs(self.config.extra.vouchers) do
+            G.GAME.used_vouchers[v] = true
+            G.GAME.starting_voucher_count = (G.GAME.starting_voucher_count or 0) + 30
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    Card.apply_to_run(nil, G.P_CENTERS[v])
+                    return true
+                end
+            }))
+        end
 
-		-- add vouchers
-		for k, v in pairs(self.config.extra.vouchers) do
-			G.GAME.used_vouchers[v] = true
-			G.GAME.starting_voucher_count = (G.GAME.starting_voucher_count or 0) + 30
-			G.E_MANAGER:add_event(Event({
-				func = function()
-					Card.apply_to_run(nil, G.P_CENTERS[v])
-					return true
-				end
-			}))
-		end
-
-		-- add consumables
-		G.E_MANAGER:add_event(Event({
+        -- add consumables
+        G.E_MANAGER:add_event(Event({
             func = function()
                 for k, v in ipairs(self.config.extra.consumables) do
                     SMODS.add_card({ key = v })
@@ -81,69 +78,68 @@ SMODS.Back {
             end
         }))
 
-		-- add cannot goodenough
-		G.E_MANAGER:add_event(Event({
+        -- add swire
+        G.E_MANAGER:add_event(Event({
             func = function ()
-				--U.M.I. created
-				local card = SMODS.create_card({
-					set = "Joker",
-					area = G.jokers,    
-					key = "j_blk_swire",
-				})
+                local card = SMODS.create_card({
+                    set = "Joker",
+                    area = G.jokers,
+                    key = "j_blk_swire",
+                })
 
-				card:add_to_deck()
-				G.jokers:emplace(card)
+                card:add_to_deck()
+                G.jokers:emplace(card)
 
-				return true
-			end
-		}))
+                return true
+            end
+        }))
 
-		-- add cards.
+        -- add cards.
         G.E_MANAGER:add_event(Event({
             func = function()
                 local trandom_m = {
-                    -- G.P_CENTERS.m_stone,
-                    -- G.P_CENTERS.m_steel,
-                    -- G.P_CENTERS.m_glass,
-                    -- G.P_CENTERS.m_gold,
-                    -- G.P_CENTERS.m_bonus,
-                    -- G.P_CENTERS.m_mult,
-                    -- G.P_CENTERS.m_wild,
+                    G.P_CENTERS.m_stone,
+                    G.P_CENTERS.m_steel,
+                    G.P_CENTERS.m_glass,
+                    G.P_CENTERS.m_gold,
+                    G.P_CENTERS.m_bonus,
+                    G.P_CENTERS.m_mult,
+                    G.P_CENTERS.m_wild,
                     G.P_CENTERS.m_lucky,
                     -- "NOTHING"
                 }
                 local trandom_e = {
-                    -- {foil = true},
-                    -- {holo = true},
+                    {foil = true},
+                    {holo = true},
                     {polychrome = true},
                     -- "NOTHING"
                 }
                 local trandom_r = {
                     "A",
-                    -- "K",
-                    -- "Q",
-                    -- "J",
-                    -- "T",
-                    -- "9",
-                    -- "8",
-                    -- "7",
-                    -- "6",
-                    -- "5",
-                    -- "4",
-                    -- "3",
-                    -- "2"
+                    "K",
+                    "Q",
+                    "J",
+                    "T",
+                    "9",
+                    "8",
+                    "7",
+                    "6",
+                    "5",
+                    "4",
+                    "3",
+                    "2"
                 }
                 local trandom_s = {
-                    -- "C",
-                    -- "D",
+                    "C",
+                    "D",
                     "H",
-                    -- "S"
+                    "S"
                 }
                 local trandom_g = {
                     "Red",
-                    -- "Blue",
-                    -- "Gold",
-                    -- "Purple",
+                    "Blue",
+                    "Gold",
+                    "Purple",
                     -- "NOTHING"
                 }
                 for i = #G.playing_cards, 1, -1 do
