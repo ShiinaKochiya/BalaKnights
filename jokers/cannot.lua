@@ -10,7 +10,6 @@ SMODS.Joker {
 
     unlocked = false,
     discovered = false,
-    no_collection = true,
 
     atlas = "Jokers",
     pos = { x = 3, y = 0 },

@@ -92,6 +92,15 @@ return {
                 }
             }
         },
+        Blind = {
+            bl_blk_greed = {
+                name = "The Greed",
+                text = {
+                    'Reduce 1 hand for',
+                    'each discard used'
+                }
+            }
+        }
     },
     misc = {
         dictionary = {

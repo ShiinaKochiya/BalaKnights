@@ -13,6 +13,14 @@ SMODS.Atlas {
     py = 95
 }
 
+SMODS.Atlas {
+    key = "Blind",
+    path = "Blind.png",
+    px = 34,
+    py = 34,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 21
+}
 -- Jokers
 assert(SMODS.load_file("jokers/amiyi.lua"))()
 assert(SMODS.load_file("jokers/cannot.lua"))()
@@ -30,3 +38,6 @@ assert(SMODS.load_file("decks/random.lua"))()
 
 -- Challenges
 assert(SMODS.load_file("challenges/all_in.lua"))()
+
+-- Blinds
+assert(SMODS.load_file("blinds/greed.lua"))()
